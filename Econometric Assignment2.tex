@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+ \documentclass[12pt]{article}
  \usepackage[margin=1in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{bm}
@@ -25,6 +25,16 @@ Consider the OLS regression of the $n\times 1$ vector $\bm{\math{y}}$ on the $n\
 \end{question}
 
 \begin{proof}
+For regressing $\bm{\math{y}}$ on $\bm{X}$, we have $\hat{\bm{\math{y}}}_x = \bm{P}_x \bm{\math{y}}$ and $\hat{\bm{\math{e}}}_x = (\bm{I}_n-\bm{P}_x) \bm{\math{y}}$, where $\bm{P}_x = \bm{X(X'X)^{-1}X}$.\\
+Then for regressing $\bm{\math{y}}$ on $\bm{Z}$, where $\bm{Z} = \bm{XC}$, we have $\hat{\bm{\math{y}}}_z = \bm{P}_z \bm{\math{y}}$ and $\hat{\bm{\math{e}}}_z = (\bm{I}_n-\bm{P}_z) \bm{\math{y}}$, where $\bm{P}_z = \bm{Z(Z'Z)^{-1}Z}= \bm{XC(C'X'XC)^{-1}C'X'}$.\\
+However, 
+\begin{align*}
+\bm{P}_z &= \bm{XC(C'X'XC)^{-1}C'X'}\\
+&=\bm{XCC^{-1}(X'X)^{-1}C'^{-1}C'X'}\\
+&=\bm{X(X'X)^{-1}X'} \\
+&=\bm{P}_x.
+\end{align*}
+Then $\hat{\bm{\math{y}}}_x =\hat{\bm{\math{y}}}_z$ and $\hat{\bm{\math{e}}}_x = \hat{\bm{\math{e}}}_z$.
 \end{proof}
 
 \begin{question}{3.3}
@@ -32,6 +42,13 @@ Using matrix algebra, $\bm{X'\hat{e}}=\bm{0}$.
 \end{question}
 
 \begin{proof}
+\begin{align*}
+\bm{X'\hat{e}}& = \bm{X'(y-\hat{y})}\\
+&=\bm{(X'-X'P)y}\\
+&=\bm{(X'-X'X(X'X)^{-1}X')y}\\
+&=\bm{(X'-X')y}\\
+&\bm{0}
+\end{align*}
 \end{proof}
 
 \begin{question}{3.4}
@@ -39,6 +56,11 @@ Let $\bm{\hat{e}}$ be the OLS residual from a regression of $\bm{y}$ on $\bm{X} 
 \end{question}
 
 \begin{proof}
+$\bm{X}_2=\bm{X\Gamma}$ and $\Gamma=\begin{pmatrix}0\\1\end{pmatrix}$, then 
+\begin{align*}
+  \bm{X'}_2\bm{\hat{e}}&=\bm{\Gamma'X'\hat{e}}\\
+  &=\bm{0}.
+\end{align*}
 \end{proof}
 
 \begin{question}{3.7}
@@ -46,6 +68,19 @@ Show that if $\bm{X} = [\bm{X}_1\bm{X}_2]$ then $\bm{PX}_1 = \bm{X}_1$ and $\bm{
 \end{question}
 
 \begin{proof}
+$\bm{X}_1  = \bm{X}\cdot\bm{\Gamma}$, where $\bm{\Gamma} =\begin{pmatrix}1\\0\end{pmatrix} $.\\
+Then \begin{align*}
+\bm{PX}_1 &=\bm{PX\Gamma}\\
+&=\bm{X(X'X)^{-1}X'}\cdot\bm{X\Gamma}\\
+&=\bm{X\Gamma}\\
+&=\bm{X}_1.
+\end{align*}
+And \begin{align*}
+\bm{MX}_1 &=\bm{MX\Gamma}\\
+&=\bm{X\Gamma}-\bm{PX\Gamma}\\
+&= \bm{X}_1 - \bm{X}_1\\
+&= \bm{0}.
+\end{align*}
 \end{proof}
 
 \begin{question}{3.8}
@@ -53,13 +88,25 @@ Show that $\bm{M}$ is idempotent: $\bm{MM} =\bm{M}$.
 \end{question}
 
 \begin{proof}
+\begin{align*}
+\bm{MM}&=\bm{(I-P)(I-P)}\\
+&=\bm{I-2P+P\cdot P}\\
+&=\bm{I-P}.
+\end{align*}
 \end{proof}
 
 \begin{question}{3.9}
-Show that tr$\bm{M}_1 = n-k$.
+Show that tr$\bm{M} = n-k$.
 \end{question}
 
 \begin{proof}
+\begin{align*}
+tr\bm{M}&=tr(\bm{I}_n-\bm{P})\\
+&=tr\bm{I}_n-tr\bm{X(X'X)^{-1}X'}\\
+&=n-tr\bm{(X'X)^{-1}X'X}\\
+&=n-tr\bm{I}_k\\
+&=n-k.
+\end{align*}
 \end{proof}
 
 \begin{question}{3.10}
@@ -67,6 +114,32 @@ Show that if $\bm{X} = [\bm{X}_1\bm{X}_2]$ and $\bm{X'_1X_2} = 0$ then $\bm{P} =
 \end{question}
 
 \begin{proof}
+For $\bm{X} = [\bm{X}_1\bm{X}_2]$, 
+\begin{align*}
+\hat{\bm{\beta}} &= \begin{pmatrix}\hat{\bm{\beta}_1}\\\hat{\bm{\beta}_2}\end{pmatrix}\\
+&=\bm{(X'X)^{-1}X'y}\\
+&=\begin{pmatrix}\bm{X_1'X_1}&\bm{X_1'X_2}\\
+\bm{X_2'X_1}&\bm{X_2'X_2}\end{pmatrix}^{-1}
+\begin{pmatrix}\bm{X_1'y}\\\bm{X_2'y}\end{pmatrix}\\
+&= \begin{pmatrix}\bm{X_1'X_1}&\bm{0}\\
+\bm{0}&\bm{X_2'X_2}\end{pmatrix}^{-1}
+\begin{pmatrix}\bm{X_1'y}\\\bm{X_2'y}\end{pmatrix}\\
+&=\begin{pmatrix}(\bm{X_1'X_1})^{-1}&\bm{0}\\
+\bm{0}&(\bm{X_2'X_2})^{-1}\end{pmatrix}
+\begin{pmatrix}\bm{X_1'y}\\\bm{X_2'y}\end{pmatrix}\\
+&=\begin{pmatrix}\bm{(X_1'X_1)^{-1}X_1'y}\\\bm{(X_2'X_2)^{-1}X_2'y}\end{pmatrix}.
+\end{align*}
+And we know $\bm{P}_1 = \bm{X_1(X_1'X_1)^{-1}X_1'}$ and $\bm{P}_2 = \bm{X_2(X_2'X_2)^{-1}X_2'}$, then
+\begin{align*}
+\bm{Py}&=\bm{X}\hat{\bm{\beta}}\\ &=\bm{X}\begin{pmatrix}\bm{(X_1'X_1)^{-1}X_1'y}\\\bm{(X_2'X_2)^{-1}X_2'y}\end{pmatrix}\\
+&=\begin{pmatrix}\bm{X}_2&\bm{X}_2\end{pmatrix}\begin{pmatrix}\bm{(X_1'X_1)^{-1}X_1'y}\\\bm{(X_2'X_2)^{-1}X_2'y}\end{pmatrix}\\
+&=\begin{pmatrix}\bm{X_1(X_1'X_1)^{-1}X_1'y}\\\bm{X_2(X_2'X_2)^{-1}X_2'y}\end{pmatrix}\\
+&=\begin{pmatrix}\bm{P_1y}\\\bm{P_2y}\end{pmatrix}\\
+&=\begin{pmatrix}\bm{P_1}\\\bm{P_2}\end{pmatrix}\bm{y}.
+\end{align*}
+Then $\bm{P} = \begin{pmatrix}\bm{P_1}\\\bm{0}\end{pmatrix}+
+\begin{pmatrix}\bm{0}\\\bm{P_2}\end{pmatrix} = \bm{P}_1+\bm{P}_2$.
+
 \end{proof}
 
 \begin{question}{3.11}
@@ -74,6 +147,21 @@ Show that when $\bm{X}$ contains a constant, $\frac{1}{n}\sum_{i = 1}^{n}\hat{y}
 \end{question}
 
 \begin{proof}
+If $\bm{X}$ contains a constant, as $\bm{X} = \begin{pmatrix}c\\\bm{x}_2\\\bm{x}_3\\...\\\bm{x}_k\end{pmatrix}$, then we have
+\begin{align*}
+\bm{X'\hat{e}}&=(c,\bm{x}_2,\bm{x}_3...\bm{x}_k)\bm{\hat{e}}\\
+&=(c,\bm{x}_2,\bm{x}_3...\bm{x}_k)
+\begin{pmatrix}
+\hat{\bm{e}}_1\\\hat{\bm{e}}_1\\...\\\hat{\bm{e}}_n
+\end{pmatrix}\\
+&=\bm{0}
+\end{align*}
+Then $c\sum_{i = 1}^{n}\bm{\hat{e}}_i = 0$, i.e. $\sum_{i = 1}^{n}\bm{\hat{e}}_i = 0 = \sum_{i = 1}^{n}(\bm{\hat{y}}_i-\bm{y}_i)$, then
+\begin{align*}
+\frac{1}{n}\sum_{i = 1}^{n}\bm{\hat{y}}_i &= \frac{1}{n}\sum_{i = 1}^{n}\bm{y}_i\\
+&= \bm{\Bar{y}}.
+\end{align*}
+
 \end{proof}
 
 \end{document}
