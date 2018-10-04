@@ -1,0 +1,162 @@
+ \documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{bm}
+\DeclareMathOperator*{\argmin}{argmin}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{answer}{{\noindent\it Answer.}}{\hfill \par}
+
+ 
+\begin{document}
+
+ 
+\title{Econometric Assignment 3}
+\author{Xiang ZHOU 1155118711}
+\maketitle
+ 
+\begin{question}{4.3}
+Explain the difference between $\bar{y}$  and $\mu$. Explain the difference between the $n^{-1}\sum_{i=1}^{n}x_i x_i'$ and $\mathbb{E}(x_i x_i')$.
+\end{question}
+
+\begin{proof}
+$\bar{y}$ is the sample mean of $y_i$, while $\mu$ is the mean of random variable $\bm{y}$.\\
+Similarly, $n^{-1}\sum_{i=1}^{n}x_i x_i'$ is the 2-nd order moment of sample, while $\mathbb{E}(x_i x_i')$ is the 2-nd order moment of random varible $\bm{x}$.\\
+\end{proof}
+
+\begin{question}{4.4}
+True or False. If $y_i = x_i \beta+e_i, x_i\in \mathbb{R}, \mathbb{E}(e_i|x_i) = 0$, and $\hat{e_i}$ is the OLS residual from the regression of $y_i$ on $x_i$, then $\sum_{i=1}^{n}x_i^2 \hat{e_i} = 0$.
+\end{question}
+
+\begin{proof}
+False.\\
+\begin{align*}
+\sum_{i=1}^{n}x_i^2 \hat{e_i} 
+&= \sum_{i=1}^{n}x_i^2 (y_i - x_i'\hat{\beta})\\
+&= \sum_{i=1}^{n}x_i^2y_i -\sum_{i=1}^{n}x_i^3\frac{\sum_{i = 1}^n x_iy_i}{\sum_{i = 1}^nx_i^2}\\
+\end{align*}
+\end{proof}
+
+\begin{question}{4.5}
+Prove $$\mathbb{E}(\bm{\hat{\beta}}|\bm{X})=\bm{\beta}$$ and $$var(\bm{\hat{\beta}}|\bm{X}) = \bm{(X'X)^{-1}(X'\Omega X)(X'X)^{-1}}.$$
+\end{question}
+
+\begin{proof}
+a) 
+\begin{align*}
+\mathbb{E}(\bm{\hat{\beta}}|\bm{X})
+&=\mathbb{E}(\bm{(X'X)^{-1}XY}|\bm{X})\\
+&=\mathbb{E}(\bm{(X'X)^{-1}X(X'\beta +e)}|\bm{X})\\
+&=\mathbb{E}(\bm{(X'X)^{-1}XX'\beta}|\bm{X})+\mathbb{E}(\bm{(X'X)^{-1}Xe}|\bm{X})\\
+&=\bm{\beta}+\bm{(X'X)^{-1}X\mathbb{E}(e}|\bm{X})\\
+&=\bm{\beta}
+\end{align*}
+b)
+\begin{align*}
+var(\bm{\hat{\beta}}|\bm{X}) = \bm{(X'X)^{-1}(X'\Omega X)(X'X)^{-1}}
+&=\mathbb{E}((\hat{\bm{\beta}}-\bm{\beta})(\hat{\bm{\beta}}-\bm{\beta})'|\bm{X})\\
+&=\mathbb{E}(\bm{(X'X)^{-1}X'ee'X(X'X)^{-1}}|\bm{X})\\
+&=\bm{(X'X)^{-1}X'}\mathbb{E}(\bm{ee'}|\bm{X})\bm{X(X'X)^{-1}}\\
+&=\bm{(X'X)^{-1}X'}\bm{\Omega}\bm{X(X'X)^{-1}}\\
+\end{align*}
+when $\bm{\Omega} = \mathbb{E}(\bm{ee'}|\bm{X}) = var(\bm{e})$, and for $\bm{\hat{\beta}-\beta} = \bm{(X'X)^{-1}X'(X\beta +e)-\beta} =\bm{(X'X)^{-1}X'e}$.
+\end{proof}
+
+\begin{question}{4.13}
+Take the simple regression model $y_i = x_i\beta+e_i,x\in\mathbb{R},\mathbb{E}(e_i|x_i) = 0$. Define $\sigma_i^2 = \mathbb{E}(e_i^2|x_i)$ and $\mu_{3i}=\mathbb{E}(e_i^3|x_i)$ and consider the OLS coefficient $\hat{\beta}$. Find $\mathbb{E}((\hat{\beta}-\beta)^3|\bm{X})$.
+\end{question}
+\begin{proof}
+For $e_i$ and $e_j$ are independent, and $\mathbb{E}(e_j|\bm{X})=0$,
+\begin{align*}
+\mathbb{E}((\hat{\beta}-\beta)^3|\bm{X})
+&=\mathbb{E}((\frac{\sum_{i = 1}^{n}x_i e_i}{\sum_{i = 1}^{n}x_i^2})^3|\bm{X})\\
+&=\frac{1}{(\sum_{i = 1}^{n}x_i^2)^3}\mathbb{E}((\sum_{i = 1}^{n}x_i e_i)^3|\bm{X})\\
+&=\frac{1}{(\sum_{i = 1}^{n}x_i^2)^3}\mathbb{E}(\sum_{i = 1}^{n}x_i^3e_i^3+3\sum_{i\ne j}x_i^2x_je_i^2e_j|\bm{X})\\
+&=\frac{1}{(\sum_{i = 1}^{n}x_i^2)^3}\sum_{i = 1}^{n}x_i^3\mathbb{E}(e_i^3|\bm{X})+
+\frac{3}{(\sum_{i = 1}^{n}x_i^2)^3}\sum_{i \ne j}x_i^2x_j\mathbb{E}(e_i^2e_j|\bm{X})+\\
+&\quad \quad \frac{6}{(\sum_{i = 1}^{n}x_i^2)^3}\sum_{i \ne j\ne k}x_ix_jx_k\mathbb{E}(e_ie_je_k|\bm{X})\\
+&=\frac{\sum_{i = 1}^{n}x_i^3\mu_{3i}}{(\sum_{i = 1}^{n}x_i^2)^3}+
+\frac{3}{(\sum_{i = 1}^{n}x_i^2)^3}\sum_{i \ne j}x_i^2x_j(\mathbb{E}(e_i^2|\bm{X})\mathbb{E}(e_j|\bm{X}))+\\
+&\quad \quad \frac{6}{(\sum_{i = 1}^{n}x_i^2)^3}\sum_{i \ne j\ne k}x_ix_jx_k\mathbb{E}(e_i|\bm{X})\mathbb{E}(e_j|\bm{X})\mathbb{E}(e_k|\bm{X})\\
+&=\frac{\sum_{i = 1}^{n}x_i^3\mu_{3i}}{(\sum_{i = 1}^{n}x_i^2)^3}.
+\end{align*}
+\end{proof}
+
+\begin{question}{4.18}
+Take the model $$y_i = \bm{x'_{1i}\beta_1}+\bm{x'_{2i}\beta_2}+e_i$$
+$$\mathbb{E}(e_i|x_i) = 0$$
+$$\mathbb{E}(e_i^2|x_i) = \sigma^2$$
+where $\bm{x}_i = (\bm{x}_{1i},\bm{x}_{2i})$, with $\bm{x}_{1i}_{k_1\times1}$ and $\bm{x}_{2i}_{k_2\times1}$. Consider the short regression $$y_i = \bm{x'_{1i}\hat{\beta_1}}+\hat{e_i}$$
+and define the error variance estimator
+$$s^2 = \frac{1}{n-k_1}\sum_{i=1}^{n}\hat{e_i}^2.$$
+Find $\mathbb{E}(s^2|\bm{X})$.
+\end{question}
+
+\begin{proof}
+Notation now may lead to misunderstanding, so I rewrite the question as:\\
+Take the model $$y_i = \bm{x'_{1i}\beta_1}+\bm{x'_{2i}\beta_2}+e_i$$
+$$\mathbb{E}(e_i|x_i) = 0$$
+$$\mathbb{E}(e_i^2|x_i) = \sigma^2$$
+where $\bm{x}_i = (\bm{x}_{1i},\bm{x}_{2i})$, with $\bm{x}_{1i}_{k_1\times1}$ and $\bm{x}_{2i}_{k_2\times1}$. Consider the short regression $$y_i = \bm{x'_{1i}\hat{\gamma_1}}+\hat{u_i}$$
+and define the error variance estimator
+$$s^2 = \frac{1}{n-k_1}\sum_{i=1}^{n}\hat{u_i}^2.$$
+Find $\mathbb{E}(s^2|\bm{X})$.\\
+\begin{align*}
+(n-k_1)s^2 
+&= \sum_{i=1}^{n}\hat{u_i}^2\\
+&=\hat{\bm{u}_i}'\hat{\bm{u}_i}\\
+&= \bm{y'M_1y}
+\end{align*}
+where $\bm{y} = \bm{X\beta+e}$ and $\bm{M_1 = I_n-X_1(X_1'X_1)^{-1}X_1}$
+\end{proof}
+
+\begin{question}{5.12}
+Suppose $X_i$ are independent $N(\mu_i,\sigma_i^2)$. Find the distribution of the weighted sum $\sum_{i=1}^{n}w_i X_i$.
+\end{question}
+
+\begin{proof}
+$$X_i \sim N(\mu_i,\sigma_i^2)$$
+then
+$$w_iX_i \sim N(w_i\mu_i,w_i^2\sigma_i^2)$$
+for $X_i$ are independent
+$$\sum_{i = 1}^{n}w_iX_i \sim N(\sum_{i = 1}^{n}w_i\mu_i,\sum_{i = 1}^{n}w_i^2\sigma_i^2)$$
+\end{proof}
+
+\begin{question}{5.13}
+Show that if $\bm{e}\sim N(\bm{0,I}_n \sigma^2)$ and $\bm{H'H=I}_n$ then $\bm{u=H'e} \sim N(\bm{0, I}_n\sigma^2)$.
+\end{question}
+
+\begin{proof}
+\begin{align*}
+\bm{u=H'e} &\sim N(\bm{0},\bm{H'I_n}\sigma^2\bm{H}) \\
+ &\sim N(\bm{0},\bm{H'HI_n}\sigma^2) \\
+ &\sim N(\bm{0, I}_n\sigma^2).
+\end{align*}
+\end{proof}
+
+\begin{question}{5.14}
+Show that if $\bm{e} \sim N(\bm{0,\Sigma})$ and $\bm{\Sigma=AA'}$ then $\bm{u=A^{-1}e}\sim N(\bm{0,I}_n)$.
+\end{question}
+
+\begin{proof}
+\begin{align*}
+\bm{u=A^{-1}e}&\sim N(\bm{0},\bm{A^{-1}AA'A^{-1}'})\\
+&\sim N(\bm{0,I}_n)
+\end{align*}
+\end{proof}
+
+\begin{question}{5.15}
+Show that $\hat{\bm{\theta}}= \operatorname*{argmax}_{\bm{\theta \in \Theta}}logL(\bm{\theta}) = \operatorname*{argmax}_{\bm{\theta \in \Theta}}L(\bm{\theta})$.
+\end{question}
+
+\begin{proof}
+Because logarithm is strictly increasing function, $\bm{\theta}$ maximize the $logL(\bm{\theta})$ also maximize the $L(\bm{\theta})$.
+\end{proof}
+
+
+\end{document}
