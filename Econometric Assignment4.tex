@@ -1,0 +1,138 @@
+ \documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts,mathtools}
+\usepackage{bm}
+\DeclareMathOperator*{\argmin}{argmin}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{answer}{{\noindent\it Answer.}}{\hfill \par}
+
+ 
+\begin{document}
+
+ 
+\title{Econometric Assignment 4}
+\author{Xiang ZHOU 1155118711}
+\maketitle
+ 
+\begin{question}{6.1}
+For the following sequences, show $a_n \to 0$ as $n \to \infty$\\
+(a) $a_n = 1/n$\\
+(b) $a_n = \frac{1}{n}sin(\frac{\pi}{2}n)$
+\end{question}
+
+\begin{proof}
+(a) $\forall \epsilon >0,\exists N>\frac{1}{\epsilon}$, s.t. $n>\frac{1}{N}$, then
+$$|\frac{1}{n}-0| = \frac{1}{n}<\frac{1}{N}<\epsilon.$$
+So when $n\to 0, a_n = \frac{1}{n}\to 0.$\\
+(b) $\forall \epsilon >0,\exists N>\frac{1}{\epsilon}$, s.t. $n>\frac{1}{N}$, then
+$$|\frac{1}{n}sin(\frac{\pi}{2}n)-0| = \frac{1}{n}|sin(\frac{\pi}{2}n)|\le \frac{1}{n}<\frac{1}{N}<\epsilon.$$
+So when $n\to 0, a_n = \frac{1}{n}sin(\frac{\pi}{2}n)\to 0.$\\
+\end{proof}
+
+\begin{question}{6.2}
+Does the sequence $a_n = sin(\frac{\pi}{2}n)$ converge? Find the liminf and limsup as $n\to \infty$.
+\end{question}
+
+\begin{proof}
+ \[
+    sin(\frac{\pi}{2}n)=\left\{
+                \begin{array}{rl}
+                 1& n = 4k+1\\
+                 -1&n = 4k+3\\
+                 0 & n = 4k+2, 4k+4
+                \end{array}
+              \right.
+  \] 
+  where $k = 1,2,3,...$. Then $lim_{n\to \infty} sup a_n = 1$ and $lim_{n\to \infty} inf a_n = -1$, so when $n\to 0$, limsup is 1 and liminf is -1.
+\end{proof}
+
+
+\begin{question}{6.3}
+A weighted sample mean takes the form $\bar{y*} = \frac{1}{n}\sum_{i = 1}^{n}w_iy_i$ for some non-negative constants $w_i$ satisfying $\frac{1}{n}\sum_{i = 1}^{n}w_i = 1$. Assume $y_i$ is iid.\\
+(a) Show that $\bar{y*}$ is unbiased for $\mu = \mathbb{E}(y_i)$\\
+(b) Calculate $var(\bar{y*})$\\
+(c) Show that a sufficient condition for $\bar{y*}\xrightarrow{\text{p}}\mu$ is that $\frac{1}{n^2}\sum_{i = 1}^{n}w_i^2\to 0$, as $n \to \infty$.\\
+(d) Show that a sufficient condition for the condition in part 3 is $max_{i\le n}w_i = o(n)$
+\end{question}
+
+\begin{proof}
+(a) \begin{align*}
+\mathbb{E}(\bar{y*}) &= \mathbb{E}(\frac{1}{n}\sum_{i = 1}^{n}w_i y_i)\\
+&=\frac{1}{n}\mathbb{E}(\sum_{i = 1}^{n}w_i y_i)\\
+&=\frac{1}{n}\sum_{i = 1}^{n}w_i\mathbb{E}(y_i)\\
+&=\mu \frac{1}{n}\sum_{i = 1}^{n}w_i\\
+&=\mu
+\end{align*}
+$\bar{y*}$ is unbiased for $\mu = \mathbb{E}(y_i)$.\\
+(b) For $y_i$ is iid. with variance of $\sigma^2$.
+\begin{align*}
+var(\bar{y*})& = var(\frac{1}{n}\sum_{i = 1}^n w_i y_i)\\
+&= \frac{1}{n^2}var(\sum_{i = 1}^n w_i y_i)\\
+&= \frac{1}{n^2}\sum_{i = 1}^n var(w_i y_i)\\
+&=\frac{1}{n^2}\sum_{i = 1}^n w_i^2 var(y_i)\\
+& = \frac{1}{n^2}\sum_{i = 1}^n w_i^2 \sigma^2\\
+\end{align*}
+(c)
+ With Chebyshev's inequality, for random variable $\bar{y*} = \frac{1}{n}\sum_{i = 1}^{n}w_i y_i$ with mean of $\mu$ and variance of $\frac{1}{n^2}\sum_{i = 1}^n w_i^2 \sigma^2$, we have 
+ $$Pr(|\bar{y*} - \mathbb{E}(\bar{y*})|>\delta) = Pr(|\bar{y*} - \mu|>\delta) <\frac{\frac{1}{n^2}\sum_{i = 1}^n w_i^2 \sigma^2}{\delta^2} .$$
+If $\frac{1}{n^2}\sum_{i = 1}^{n}w_i^2\to 0$,
+$$Pr(|\bar{y*} - \mu|>\delta) <\frac{\frac{1}{n^2}\sum_{i = 1}^n w_i^2 \sigma^2}{\delta^2} \to 0,\quad n\to \infty.$$
+Then $lim_{n\to \infty}Pr(|\bar{y*}-\mu|<\delta) = 1$, that is, $\bar{y*}\xrightarrow{\text{p}}\mu$\\
+(d) $max_{i\le n}w_i = o(n)$ means $\forall i \le n, lim_{n\to \infty} \frac{w_i}{n} = 0$, then $\forall i \le n, lim_{n\to \infty} \frac{w_i^2}{n^2} = 0$, then $\sum_{i = 1}^{n} lim_{n\to \infty} \frac{w_i^2}{n^2} = 0$, so $lim_{n\to \infty}\sum_{i = 1}^{n}  \frac{w_i^2}{n^2} = 0.$
+\end{proof}
+
+\begin{question}{6.4}
+Consider a random variable $X_n$ with the probability distribution
+ \[
+    X_n=\left\{
+                \begin{array}{rl}
+                  -n & p = 1/n\\
+                  0 & p = 1-2/n\\
+                  n & p = 1/n
+                \end{array}
+              \right.
+  \]
+(a) Does $X_n\xrightarrow{\text{p}}0$ as $n\to \infty$?\\
+(b) Calculate $\mathbb{E}(X_n)$\\
+(c) Calculate $var(X_n)$\\
+(d) Now suppose the distribution is 
+ \[
+    X_n=\left\{
+                \begin{array}{rl}
+                  0 & p = 1-1/n\\
+                  n & p = 1/n
+                \end{array}
+              \right.
+  \]
+  Calculate $\mathbb{E}(X_n)$\\
+ (e) Conclude that$X_n\xrightarrow{\text{p}}0$ as $n\to \infty$ and $\mathbb{E}(X_n)\to 0$ are unrelated.
+\end{question}
+
+\begin{proof}
+(a) $Pr(|X_n - 0| = 0)=1-2/n \to 1$, as $n\to\infty$, then$X_n\xrightarrow{\text{p}}0$ as $n\to \infty$.\\
+(b) \begin{align*}
+\mathbb{E}(X_n)& = -n\cdot 1/n+0\cdot (1-2/n)+n\cdot 1/n\\
+&=0
+\end{align*}
+(c)  \begin{align*}
+var(X_n)& = (-n-0)^2\cdot 1/n+(0-0)^2\cdot (1-2/n)+(n-0)^2\cdot 1/n\\
+&=2n
+\end{align*}
+(d) \begin{align*}
+\mathbb{E}(X_n)& = 0\cdot (1-1/n)+n\cdot 1/n\\
+&=1
+\end{align*}
+(e) For $X_n$ in (c), $Pr(|X_n - 0| = 0)=1-1/n \to 1$, as $n\to\infty$, then$X_n\xrightarrow{\text{p}}0$ as $n\to \infty$; but $\mathbb{E}(X_n) = 1 \nrightarrow 0$, as $n \to \infty$.\\
+So $X_n\xrightarrow{\text{p}}0$ as $n\to \infty$ and $\mathbb{E}(X_n)\to 0$ are unrelated.
+\end{proof}
+
+\begin{question}{6.5}
+Same as 6.3.
+\end{question}
+\end{document}
