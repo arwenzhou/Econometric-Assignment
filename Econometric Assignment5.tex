@@ -1,0 +1,105 @@
+ \documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts,mathtools}
+\usepackage{bm}
+\DeclareMathOperator*{\argmin}{argmin}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bmseries #1}\hskip \labelsep {\bmseries #2.}]}{\end{trivlist}}
+
+\newenvironment{answer}{{\noindent\it Answer.}}{\hfill \par}
+
+ 
+\begin{document}
+
+ 
+\title{Econometric Assignment 5}
+\author{Xiang ZHOU 1155118711}
+\maketitle
+ 
+\begin{question}{6.10}
+Suppose $z_n\xrightarrow{p}c$ as $n \to \infty$. Show that $z_n^2\xrightarrow{p}c^2$ as $n\to \infty$ using the definition of convergence in probability, but not appealing to the CLT.
+\end{question}
+
+\begin{proof}
+If we want to show $z_n^2\xrightarrow{p}c^2$ as $n\to \infty$, that means we need to prove $\forall \delta>0, \exists \epsilon >0, s.t. Pr(|z_n^2-c^2|>\delta)<\epsilon$, that is 
+$Pr(z_n^2>c^2+\delta) + Pr(z_n^2<c^2-\delta) < \epsilon$.\\
+And we know $z_n\xrightarrow{p}c$ as $n \to \infty$, so $\forall \delta'>0, \exists \epsilon,s.t. Pr(|z_n-c|>\delta')<\epsilon'$. Let $\delta' = min(\sqrt{c^2+\delta}-c,\sqrt{c^2+\delta}+c,c-\sqrt{c^2-\delta}>\delta'),c+\sqrt{c^2-\delta}>\delta'))$, and $\epsilon' = \frac{\epsilon}{4}$, then 
+\begin{align*}
+Pr(z_n>\sqrt{c^2+\delta})<Pr(|z_n-c|>\sqrt{c^2+\delta}-c>\delta')<\epsilon'\\
+Pr(z_n<-\sqrt{c^2+\delta})<Pr(|z_n-c|>\sqrt{c^2+\delta}+c>\delta')<\epsilon'\\
+Pr(z_n<\sqrt{c^2-\delta})<Pr(|z_n-c|>c-\sqrt{c^2-\delta}>\delta')<\epsilon'\\
+Pr(z_n>-\sqrt{c^2-\delta})<Pr(|z_n-c|>c+\sqrt{c^2+\delta}>\delta')<\epsilon'\\
+\end{align*}
+then $Pr(|z_n^2-c^2|>\delta)$ is less than all four equations above and $Pr(|z_n^2-c^2|>\delta)<\epsilon$.
+\end{proof}
+
+\begin{question}{6.13}
+Suppose $\sqrt{n}(\hat{\mu}-\mu)\xrightarrow{d}N(0,v^2)$ and set $\beta = \mu^2$ and $\hat{\beta} = \hat{\mu}^2$.\\
+(a) Use the Delta Method to obtain an asymptotic distribution for $\sqrt{n}(\hat{\beta}-\beta)$.\\
+(b) Now Suppose $\mu = 0$. Describe what happens to the asymptotic distribution from the previous part.\\
+(c) Improve on the previous answer. Under the assumption $\mu = 0$, find the asymptotic distribution for $n\hat{\beta} = n\hat{\mu}^2$.\\
+(d) Comment on the differences between the answers in parts 1 and 3.
+\end{question}
+
+\begin{proof}
+(a) Denote $f(x) = x^2$ is continuous differentiable on support of $x$, then $f'(x) = 2x$.\\
+So $\beta = f(\mu) = \mu^2$ and $\hat{\beta} = f(\hat{\mu}) = \hat{\mu}^2$, $f'(\mu) = 2\mu$, since
+$$\sqrt{n}(\hat{\mu}-\mu)\xrightarrow{d}N(0,v^2)$$
+then
+$$\sqrt{n}(f(\hat{\mu})-f(\mu))\xrightarrow{d}N(0,2\mu\cdot v^2 \cdot 2\mu)$$
+thus
+$$\sqrt{n}(\hat{\beta}-\beta)\xrightarrow{d}N(0,4\mu^2v^2)$$
+(b) If $\mu = 0$, 
+$\sqrt{n}(\hat{\beta}-\beta)\xrightarrow{d}N(0,0)$, actually, which means the limit distribution is constant.\\
+(c) $n\hat{\beta} = (\sqrt{n}\hat{\mu})^2$, when $\mu = 0$, $\sqrt{n}\hat{\mu}\xrightarrow{d}N(0,v^2)$, then$\frac{\sqrt{n}\hat{\mu}}{v}\xrightarrow{d}N(0,1)$, so $(\frac{\sqrt{n}\hat{\mu}}{v})^2\xrightarrow{d}\chi_1^2$, that is $$\frac{n\hat{\beta}}{v^2}\xrightarrow{d}\chi_1^2.$$
+\end{proof}
+
+\begin{question}{7.1}
+Take the model $y_i = x'_{1i}\beta_1 + x'_{2i}\beta_2+e_i$ with $\mathbb{E}(x_ie_i) = 0$. Suppose that $\beta_1$ is estimated by regressing $y_i$ on $x_{1i}$ only. Find the probability limit of this estimator. In general, is it consistent for $\beta_1$? If not, under what conditions is this estimator consistent for $\beta_1$?
+\end{question}
+
+\begin{proof}
+Denote $\hat{\beta_1*}$ is estimated by regressing $y_i$ on $x_{1i}$ only
+\begin{align*}
+\hat{\beta_1*} & = \mathbb{E}(x_1'x_1)^{-1}\mathbb{E}(x_1'y)\\
+&= \mathbb{E}(x_1'x_1)^{-1}\mathbb{E}[x_1'(x_1\beta_1+x_2\beta_2+e)]\\
+&= \beta_1 +\beta_2\mathbb{E}(x_1'x_1)^{-1}\mathbb{E}(x_1'x_2)\\
+\end{align*}
+In general $\hat{\beta_1*}$ is not consistent for $\beta_1$, but when $x_1$ and $x_2$ are orthogonal or $\beta_2 = 0$, it will be consistent.
+\end{proof}
+
+\begin{question}{7.2}
+Let $\bm{y}$ be $n\times 1$, $\bm{X}$ be $n \times k$ (rank $k$). $\bm{y = X\beta +e}$ with $\mathbb{E}(x_i e_i)=0$. Define the \textit{ridge regression} estimator
+$$\hat{\bm{\beta}} = (\sum_{i = 1}^{n}\bm{x}_i\bm{x}_i'+\lambda\bm{I}_k)^{-1}(\sum_{i = 1}^n\bm{x}_i y_i)$$
+here $\lambda > 0$ is a fixed constant. Find the probability limit of $\bm{\hat{\beta}}$ as $n\to \infty$. Is $\hat{\bm{\beta}}$ consistent for $\bm{\beta}$?
+\end{question}
+
+\begin{proof}
+\begin{align*}
+\hat{\bm{\beta}}& = (\sum_{i = 1}^{n}\bm{x}_i\bm{x}_i'+\lambda\bm{I}_k)^{-1}(\sum_{i = 1}^n\bm{x}_i y_i)\\
+& = (\frac{1}{n}\sum_{i = 1}^{n}\bm{x}_i\bm{x}_i'+\frac{1}{n}\lambda\bm{I}_k)^{-1}(\frac{1}{n}\sum_{i = 1}^n\bm{x}_i y_i)\\
+&=(\hat{Q_{xx}}+\frac{1}{n}\lambda\bm{I}_k)^{-1}\hat{Q_{xy}}\\
+\end{align*}
+With WLLN $\hat{Q_{xx}}\xrightarrow{p} \mathbb{E}(\bm{x}_i\bm{x}_i') = Q_{xx}$, $\hat{Q_{xy}}\xrightarrow{p} \mathbb{E}(\bm{x}_i\bm{y}) = Q_{xy}$, and $\frac{1}{n}\lambda\bm{I}_k \to 0$ as $n\to \infty$. Then $\hat{\bm{\beta}}\xrightarrow{p}\bm{\beta} $\\
+So $\hat{\bm{\beta}}$ consistent for $\bm{\beta}$.
+\end{proof}
+
+\begin{question}{7.3}
+For the ridge regression estimator in 7.2, set $\lambda = c n$ where $c>0$ is fixed as $n\to \infty$. Find the probability limit of $\hat{\bm{\beta}}$ as $n\to \infty$. 
+\end{question}
+
+\begin{proof}
+Same as 7.2, with $\lambda = cn$
+\begin{align*}
+\hat{\bm{\beta}}
+&=(\hat{Q_{xx}}+\frac{1}{n}\lambda\bm{I}_k)^{-1}\hat{Q_{xy}}\\
+&=(\hat{Q_{xx}}+c\bm{I}_k)^{-1}\hat{Q_{xy}}
+\end{align*}
+$\frac{1}{n}\lambda\bm{I}_k \to c\bm{I}_k $ as $n\to \infty$, so $\hat{\bm{\beta}}\xrightarrow{p}(Q_{xx}+ c\bm{I}_k)^{-1}Q_{xy}$.
+\end{proof}
+
+\end{document}
