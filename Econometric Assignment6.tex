@@ -1,0 +1,82 @@
+ \documentclass[12pt]{article}
+ \usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts,mathtools}
+\usepackage{bm}
+\DeclareMathOperator*{\argmin}{argmin}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bmseries #1}\hskip \labelsep {\bmseries #2.}]}{\end{trivlist}}
+
+\newenvironment{answer}{{\noindent\it Answer.}}{\hfill \par}
+
+ 
+\begin{document}
+
+ 
+\title{Econometric Assignment 6}
+\author{Xiang ZHOU 1155118711}
+\maketitle
+ 
+\begin{question}{9.2}
+You have two independent samples($\bm{y_1}$,$X_1$) and ($\bm{y_2}$,$X_2$) which satisfy $\bm{y_1} = \bm{X_1\beta_1+e_1}$ and $\bm{y_2 = X_2 \beta_2+e_2}$, where $\mathbb{E}(x_{1i}e_{1i}) = \bm{0}$ and $\mathbb{E}(x_{2i}e_{2i}) = \bm{0}$, and both $\bm{X}_1$ and $\bm{X}_2$ have $k$ columns. Let $\hat{\bm{\beta}_1}$ and $\hat{\bm{\beta}_2}$ be the OLS estimates of $\bm{\beta}_1$ and $\bm{\beta}_2$. For simplicity, you may assume that both samples have the same number of observations $n$.\\
+(a) Find the asymptotic distribution of $\sqrt{n}((\hat{\bm{\beta}_2}-\hat{\bm{\beta}_1})-(\bm{\beta}_2-\bm{\beta}_1))$ as $n \to \infty$.\\
+(b) Find an appropriate test statistic for $\mathbb{H}_0:\bm{\beta}_2 = \bm{\beta}_1$.\\
+(c) Find the asymptotic distribution of this statistic under $\mathbb{H}_0$.
+\end{question}
+
+\begin{proof}
+(a) For more general case, if $X_n$ and $Y_n$are two independent random variables with $X_n\xrightarrow{d}X_\infty$ and $Y_n\xrightarrow{d}Y_\infty$.\\
+Then we have characteristic function $\varphi_{X_n}(t)\xrightarrow{d}\varphi_{X_\infty}(t)$ and $\varphi_{Y_n}(t)\xrightarrow{d}\varphi_{Y_\infty}(t)$ with continuous theorem. And since $$\varphi_{X_n+Y_n}(t) = \varphi_{X_n}(t)\varphi_{Y_n}(t)\xrightarrow{d}\varphi_{X_\infty
+}(t)\varphi_{Y_\infty}(t)=\varphi_{X_\infty+Y_\infty}(t)$$
+for all t, which means $$X_n+Y_n \xrightarrow{d} X_\infty Y_\infty$$
+Here, $$\sqrt{n}((\hat{\bm{\beta}_2}-\hat{\bm{\beta}_1})-(\bm{\beta}_2-\bm{\beta}_1)) = \sqrt{n}(\hat{\bm{\beta}_2} - \bm{\beta}_2)+\sqrt{n}(\hat{\bm{\beta}_1} - \bm{\beta}_1),$$
+and $$\sqrt{n}(\hat{\bm{\beta}_2} - \bm{\beta}_2) \xrightarrow{d} N(0,\Omega_2),$$
+$$\sqrt{n}(\hat{\bm{\beta}_1} - \bm{\beta}_1) \xrightarrow{d} N(0,\Omega_1)$$
+where, $\Omega_j = Q_j^{-1}\Sigma_j Q_j^{-1}$ and $Q_j = \mathbb{E}(x_{ji} x_{ji}')$, $\Sigma_j = \mathbb{E}(x_{ji} x_{ji}'e_{ji}^2)$.\\
+Because two samples are independent, thus
+\begin{align*}
+\sqrt{n}((\hat{\bm{\beta}_2}-\hat{\bm{\beta}_1})-(\bm{\beta}_2-\bm{\beta}_1)) 
+&= \sqrt{n}(\hat{\bm{\beta}_2} - \bm{\beta}_2) + \sqrt{n}(\hat{\bm{\beta}_1} - \bm{\beta}_1)\\
+&\xrightarrow{d} N(0,\Omega_1+\Omega_2)
+\end{align*}
+(b) $$T = \frac{\sqrt{n}(\hat{\bm{\beta_2}}-\hat{\bm{\beta_1}})}{\sqrt{s_1^2+s_2^2}},$$
+where $s_j$ is standard deviation of $\hat{\bm{\beta_j}}$.\\
+(c) $$T = \frac{\sqrt{n}((\hat{\bm{\beta}_2}-\hat{\bm{\beta}_1})-(\bm{\beta}_2-\bm{\beta}_1))+\sqrt{n}(\bm{\beta}_2-\bm{\beta}_1)}{\sqrt{s_1^2+s_2^2}}$$
+with Slusky's theorem
+$$T\xrightarrow{d}N(\sqrt{n}(\bm{\beta}_2-\bm{\beta}_1),\frac{\Omega_1+\Omega_2}{s_1^2+s_2^2})$$
+\end{proof}
+
+\begin{question}{9.3}
+Let $T$ be a t-statistic for $H_0: \theta = 0$ versus $H_1:\theta\ne 0$. Since $|T|\xrightarrow{d} |Z|$ under $H_0$, someone suggests the test "Reject $H_0$ if $|T| < c_1$ or $|T|>c_2$", where $c_1$ is the $\frac{\alpha}{2}$ quantile of $|Z|$ and $c_2$ is the $1-\frac{\alpha}{2}$ quantile of $|Z|$".\\
+(a) Show that the asymptotic size of the test is $\alpha$.\\
+(b) Is this a good test of $H_0$ versus $H_1$? Why or why not?
+\end{question}
+
+\begin{proof}
+(a)
+Since $|T|\xrightarrow{d}|Z|$
+\begin{align*}
+Pr(|T|<c_1)&=Pr(|Z|<c_1)\\
+&=\frac{\alpha}{2}
+\end{align*}
+\begin{align*}
+Pr(|T|>c_2)&=Pr(|Z|>c_2)\\
+&=1-Pr(|Z|<c_2)\\
+&=1-1+\frac{\alpha}{2}\\
+&=\frac{\alpha}{2}
+\end{align*}
+Then the asymptotic size of test "Reject $H_0$ if $|T| < c_1$ or $|T|>c_2$" is $\alpha$.\\
+(b) It is not a good test.\\
+If $H_0$ is true, samples fall in rejection region.
+%The power function of test is
+%\begin{align*}
+%\beta(\theta) &= Pr(|T|<c_1)+1-Pr(|T|<c_2)\\
+%&=1 + Pr(|\frac{\hat{\theta}-\theta}{s(\hat{\theta})}|<c_1)-Pr(|\frac{\hat{\theta}-\theta}{s(\hat{\theta})}|<c_2)\\
+%&=1+Pr(\hat{\theta}<\theta+ c_1 s(\hat{\theta})) - Pr(\hat{\theta}<\theta- c_1 s(\hat{\theta}))\\
+%&\quad-Pr(\hat{\theta}<\theta+ c_2 s(\hat{\theta})) + Pr(\hat{\theta}<\theta- c_2 s(\hat{\theta}))
+%\end{align*}
+\end{proof}
+\end{document}
